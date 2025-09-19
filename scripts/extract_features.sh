@@ -1,4 +1,4 @@
- CUDA_VISIBLE_DEVICES=0 python -u extract_SlowFast_features_LSVQ.py \
+CUDA_VISIBLE_DEVICES=0 python -u extract_SlowFast_features_LSVQ.py \
  --database LSVQ \
  --model_name SlowFast \
  --resize 224 \

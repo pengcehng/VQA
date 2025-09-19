@@ -183,8 +183,25 @@ def main(config):
         model = UGC_BVQA_model.resnet50(pretrained=False)
         model = torch.nn.DataParallel(model).to(device)
 
-        # 加载模型权重文件
-        state_dict = torch.load('ckpts/UGC_BVQA_model_LSVQ_L1RankLoss_NR_v0_epoch_12_SRCC_1.000000.pth', map_location=device, weights_only=True)
+        # 加载模型权重文件 - 使用实际存在的模型文件
+        model_path = '../ckpts/UGC_BVQA_model_LSVQ_L1RankLoss_NR_v0_epoch_12_SRCC_1.000000.pth'
+        if not os.path.exists(model_path):
+            # 如果默认模型不存在，尝试使用其他可用的模型
+            available_models = [
+                '../ckpts/UGC_BVQA_model.pth',
+                '../ckpts/UGC_BVQA_model_LSVQ_L1RankLoss_NR_v0_epoch_20_SRCC_0.960296.pth'
+            ]
+            for alt_model in available_models:
+                if os.path.exists(alt_model):
+                    model_path = alt_model
+                    logger.info(f"Using alternative model: {model_path}")
+                    break
+            else:
+                logger.error("No model file found in ckpts directory")
+                return
+        
+        logger.info(f"Loading model from: {model_path}")
+        state_dict = torch.load(model_path, map_location=device, weights_only=True)
         # 假设权重文件中的键不包含 'module.' 前缀，而模型定义中包含
         new_state_dict = {f'module.{k}': v for k, v in state_dict.items()}
 
