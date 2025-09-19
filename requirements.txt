@@ -1,0 +1,14 @@
+numpy
+torch
+torchvision
+scipy
+pandas
+Pillow
+opencv-python
+pytorchvideo
+timm
+efficientnet_pytorch
+transformers
+pytest
+psutil
+wandb

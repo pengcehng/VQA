@@ -1,0 +1,1 @@
+$env:CUDA_VISIBLE_DEVICES = 0; python -u extract_SlowFast_features_LSVQ.py --database LSVQ --model_name SlowFast --resize 224 --feature_save_folder LSVQ_SlowFast_feature/ | Out-File -FilePath logs/extracted_LSVQ_SlowFast_features.log
